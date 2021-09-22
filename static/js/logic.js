@@ -3,6 +3,31 @@ var queryUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_ho
 
 // Perform a GET request to the query URL/
 d3.json(queryUrl).then(function (data) {
+   // set different color from magnitude
+   function magnitudeColor(magnitude) {
+    switch (true) {
+    case magnitude > 5:
+      return "#red";
+    case magnitude > 4:
+      return "#orange";
+    case magnitude > 3:
+      return "gold";
+    case magnitude > 2:
+      return "#yellow";
+    case magnitude > 1:
+      return "#lightyellow";
+    default:
+      return "#lightgreen";
+    }
+  }
+  // set radius from magnitude
+    function magnitudeRadius(magnitude) {
+    if (magnitude === 0) {
+      return 1;
+    }
+
+    return magnitude * 4;
+  }
   // Once we get a response, send the data.features object to the createFeatures function.
   createFeatures(data.features);
 });
@@ -64,3 +89,5 @@ function createMap(earthquakes) {
   }).addTo(myMap);
 
 }
+
+
