@@ -8,28 +8,28 @@ d3.json(url).then(function (data) {
 });
 
 function createFeatures(earthquakeData) {
-
+// Color conditional formatting of the markers depending on depth
     function magnitudecolor(depth){
         if (depth <= 10 ) {
-            return "#B4B8AA"
+            return "#7FFFD4"
         }
         else if (depth <= 30) {
-            return "#B8B8AA"
+            return "#00FFFF"
         }
        
         else if (depth <= 50) {
-            return "#B8B3AA"
+            return "#FFFF00"
         }
       
         else if (depth <= 70) {
-            return "#B8B1AA"
+            return "#008B8B"
         }
         
         else if (depth <= 90) {
-            return "#B8AAAA"
+            return "#006400"
         }
         else {
-            return "#ADB8AA"
+            return "#FF0000"
         }
     }
 
@@ -38,15 +38,15 @@ function createFeatures(earthquakeData) {
           // Using default opacity and fill opacity
             opacity: 0.5,
             fillOpacity: 0.5,
+            weight: 1.5,
             fillColor: magnitudecolor(data.geometry.coordinates[2]),
             color: "#000000",
             // Making sure the radius will scale
             radius: data.properties.mag * 7,
-            weight: 0.5
         }
     }
 
-
+// Creating a popup on the map that displays earthquake data
     function onEachFeature(feature, layer) {
       layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}
       </p><hr><p>Magnitude: ${feature.properties.mag} | Depth: ${feature.geometry.coordinates[2]}</p>`);
@@ -90,7 +90,7 @@ function createMap(earthquakes) {
 // Creating map variable and adjusting the layers 
     var myMap = L.map("map", {
       center: [
-        35.7128, -90.0059
+        36.7128, -115.1398
       ],
       zoom: 5,
       layers: [street, earthquakes]
@@ -103,7 +103,7 @@ function createMap(earthquakes) {
     legend.onAdd = function (map) { 
       let div = L.DomUtil.create('div', 'info legend'),
       depth = [-10,10,30,50,70,90];
-      colors = ["#B4B8AA","#B8B8AA","#B8B3AA","#B8B1AA","#B8AAAA","#ADB8AA","#ADB9AA"];
+      colors = ["#B4B8AA","#B8B8AA","#B8B3AA","#B8B1AA","#B8AAAA","#ADB8AA","#ADB9AA","#008B8B"];
 
       for (var i = 0; i < depth.length; i++) {
         div.innerHTML += "<i style= 'background: " + colors[i] + "'></i> " + depth[i] + (depth[i + 1] ? "&ndash;" + depth[ i + 1] + "<br>" : "+");
