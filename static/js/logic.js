@@ -1,8 +1,8 @@
 
-let queryurl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
+let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
 
 
-d3.json(queryurl).then(function (data) {
+d3.json(url).then(function (data) {
 
     createFeatures(data.features);
 });
@@ -35,6 +35,7 @@ function createFeatures(earthquakeData) {
 
     function style(data) {
         return {
+          // Using default opacity and fill opacity
             opacity: 0.5,
             fillOpacity: 0.5,
             fillColor: magnitudecolor(data.geometry.coordinates[2]),
@@ -85,34 +86,30 @@ function createMap(earthquakes) {
       Earthquakes: earthquakes
     };
   
-
+// Creating map variable and adjusting the layers 
     var myMap = L.map("map", {
       center: [
-        37.09, -95.71
+        35.7128, -90.0059
       ],
       zoom: 5,
       layers: [street, earthquakes]
     });
-      // Add legend
-    var legend = L.control({position: "bottomright"});
-    legend.onAdd = function() {
-      var div = L.DomUtil.create("div", "info legend"),
-      depth = [-10, 10, 30, 50, 70, 90];
-    
-      div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
-  for (var i =0; i < depth.length; i++) {
-    div.innerHTML += 
-    '<i style="background:' + magnitudecolor(depth[i] + 1) + '"></i> ' +
-        depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
-      }
-    return div;
-  };
-  legend.addTo(myMap);
-
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(myMap);
+    // Set up the legend, depth, and colors, assigning the legend to be at the bottom right
+    var legend = L.control({position: "bottomright"});
+    legend.onAdd = function (map) { 
+      let div = L.DomUtil.create('div', 'info legend'),
+      depth = [-10,10,30,50,70,90];
+      colors = ["#B4B8AA","#B8B8AA","#B8B3AA","#B8B1AA","#B8AAAA","#ADB8AA","#ADB9AA"];
 
+      for (var i = 0; i < depth.length; i++) {
+        div.innerHTML += "<i style= 'background: " + colors[i] + "'></i> " + depth[i] + (depth[i + 1] ? "&ndash;" + depth[ i + 1] + "<br>" : "+");
+        }
+        return div;
+        };
 
-
+    // Adding legend to the map
+    legend.addTo(myMap)
 }
