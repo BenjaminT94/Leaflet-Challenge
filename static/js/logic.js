@@ -88,7 +88,7 @@ function createMap(earthquakes) {
     legend.onAdd = function (map) { 
       let div = L.DomUtil.create('div', 'info legend'),
       depth = [-10,10,30,50,70,90];
-      colors = ["#B4B8AA","#B8B8AA","#B8B3AA","#B8B1AA","#B8AAAA","#ADB8AA","#ADB9AA","#008B8B"];
+      colors = ["	#00FF00","#DFFF00","#FFA07A","#F08080","#FA8072","#FF0000"];
 
       for (var i = 0; i < depth.length; i++) {
         div.innerHTML += "<i style= 'background: " + colors[i] + "'></i> " + depth[i] + (depth[i + 1] ? "&ndash;" + depth[ i + 1] + "<br>" : "+");
