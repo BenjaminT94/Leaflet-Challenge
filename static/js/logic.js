@@ -40,8 +40,9 @@ function createFeatures(earthquakeData) {
             fillOpacity: 0.5,
             fillColor: magnitudecolor(data.geometry.coordinates[2]),
             color: "#000000",
-            radius: data.properties.mag * 3,
-            weight: 0.7
+            // Making sure the radius will scale
+            radius: data.properties.mag * 7,
+            weight: 0.5
         }
     }
 
@@ -53,8 +54,8 @@ function createFeatures(earthquakeData) {
 
 
     var earthquakes = L.geoJSON(earthquakeData, {
-        pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng)
+        pointToLayer: function (feature, latlong) {
+            return L.circleMarker(latlong)
         },
       onEachFeature: onEachFeature,
       style: style
