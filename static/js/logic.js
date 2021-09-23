@@ -1,4 +1,4 @@
-
+// For this exercise, I chose to go with hourly data of earthquakes
 let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson"
 
 
@@ -10,27 +10,12 @@ d3.json(url).then(function (data) {
 function createFeatures(earthquakeData) {
 // Color conditional formatting of the markers depending on depth
     function magnitudecolor(depth){
-        if (depth <= 10 ) {
-            return "#7FFFD4"
-        }
-        else if (depth <= 30) {
-            return "#00FFFF"
-        }
-       
-        else if (depth <= 50) {
-            return "#FFFF00"
-        }
-      
-        else if (depth <= 70) {
-            return "#008B8B"
-        }
-        
-        else if (depth <= 90) {
-            return "#006400"
-        }
-        else {
-            return "#FF0000"
-        }
+      if (depth <= 10 ) return "#7FFFD4";
+      else if (depth <= 30) return "#00FFFF";
+      else if (depth <= 50) return "#FFFF00";
+      else if (depth <= 70) return "#008B8B";
+      else if (depth <= 90) return "#006400";
+      else return "#FF0000";
     }
 
     function style(data) {
